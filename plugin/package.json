@@ -1,0 +1,50 @@
+{
+	"name": "@frontend/plugin",
+	"version": "0.0.1",
+	"private": true,
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		"./package.json": "./package.json",
+		".": {
+			"@frontend/source": "./src/index.ts",
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"default": "./dist/index.js"
+		}
+	},
+	"nx": {
+		"name": "plugin",
+		"targets": {
+			"build": {
+				"executor": "@nx/js:tsc",
+				"outputs": [
+					"{options.outputPath}"
+				],
+				"options": {
+					"outputPath": "plugin/dist",
+					"main": "plugin/src/index.ts",
+					"tsConfig": "plugin/tsconfig.lib.json",
+					"rootDir": "plugin/src",
+					"generatePackageJson": false,
+					"assets": [
+						{
+							"input": "./plugin/src",
+							"glob": "**/!(*.ts)",
+							"output": "."
+						},
+						{
+							"input": "./plugin/src",
+							"glob": "**/*.d.ts",
+							"output": "."
+						}
+					]
+				}
+			}
+		}
+	},
+	"dependencies": {
+		"tslib": "^2.3.0"
+	}
+}
