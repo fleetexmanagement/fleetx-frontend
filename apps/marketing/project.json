@@ -1,0 +1,89 @@
+{
+	"name": "@frontend/marketing",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "apps/marketing/src",
+	"projectType": "application",
+	"targets": {
+		"build": {
+			"executor": "@nx/next:build",
+			"outputs": ["{options.outputPath}"],
+			"defaultConfiguration": "production",
+			"options": {
+				"outputPath": "dist/apps/marketing"
+			},
+			"configurations": {
+				"development": {
+					"outputPath": "apps/marketing"
+				},
+				"production": {}
+			}
+		},
+		"serve": {
+			"executor": "@nx/next:server",
+			"defaultConfiguration": "development",
+			"options": {
+				"buildTarget": "@frontend/marketing:build",
+				"dev": true
+			},
+			"configurations": {
+				"development": {
+					"buildTarget": "@frontend/marketing:build:development",
+					"dev": true
+				},
+				"production": {
+					"buildTarget": "@frontend/marketing:build:production",
+					"dev": false
+				}
+			}
+		},
+		"export": {
+			"executor": "@nx/next:export",
+			"options": {
+				"buildTarget": "@frontend/marketing:build:production"
+			}
+		},
+		"test": {
+			"executor": "@nx/jest:jest",
+			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+			"options": {
+				"jestConfig": "apps/marketing/jest.config.ts",
+				"passWithNoTests": true
+			},
+			"configurations": {
+				"ci": {
+					"ci": true,
+					"coverageReporters": ["text"]
+				}
+			}
+		},
+		"biome-lint": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "biome lint apps/marketing"
+			}
+		},
+		"biome:check": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "biome check apps/marketing"
+			}
+		},
+		"biome:format": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "biome format apps/marketing"
+			}
+		},
+		"typecheck": {
+			"executor": "@nx/js:tsc",
+			"outputs": ["{options.outputPath}"],
+			"options": {
+				"outputPath": "dist/apps/marketing",
+				"main": "apps/marketing/src/app/page.tsx",
+				"tsConfig": "apps/marketing/tsconfig.json",
+				"assets": ["apps/marketing/public/**/*"]
+			}
+		}
+	},
+	"tags": ["type:app", "scope:marketing"]
+}

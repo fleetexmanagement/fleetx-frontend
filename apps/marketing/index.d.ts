@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/** biome-ignore-all lint/suspicious/noExplicitAny: <> */
 declare module "*.svg" {
 	const content: any;
-	export const ReactComponent: any;
-	export default content;
 }

@@ -1,0 +1,89 @@
+{
+	"name": "@frontend/dashboard",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "apps/dashboard/src",
+	"projectType": "application",
+	"targets": {
+		"build": {
+			"executor": "@nx/next:build",
+			"outputs": ["{options.outputPath}"],
+			"defaultConfiguration": "production",
+			"options": {
+				"outputPath": "dist/apps/dashboard"
+			},
+			"configurations": {
+				"development": {
+					"outputPath": "apps/dashboard"
+				},
+				"production": {}
+			}
+		},
+		"serve": {
+			"executor": "@nx/next:server",
+			"defaultConfiguration": "development",
+			"options": {
+				"buildTarget": "@frontend/dashboard:build",
+				"dev": true
+			},
+			"configurations": {
+				"development": {
+					"buildTarget": "@frontend/dashboard:build:development",
+					"dev": true
+				},
+				"production": {
+					"buildTarget": "@frontend/dashboard:build:production",
+					"dev": false
+				}
+			}
+		},
+		"export": {
+			"executor": "@nx/next:export",
+			"options": {
+				"buildTarget": "@frontend/dashboard:build:production"
+			}
+		},
+		"test": {
+			"executor": "@nx/jest:jest",
+			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+			"options": {
+				"jestConfig": "apps/dashboard/jest.config.ts",
+				"passWithNoTests": true
+			},
+			"configurations": {
+				"ci": {
+					"ci": true,
+					"coverageReporters": ["text"]
+				}
+			}
+		},
+		"biome-lint": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "biome lint apps/dashboard"
+			}
+		},
+		"biome:check": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "biome check apps/dashboard"
+			}
+		},
+		"biome:format": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "biome format apps/dashboard"
+			}
+		},
+		"typecheck": {
+			"executor": "@nx/js:tsc",
+			"outputs": ["{options.outputPath}"],
+			"options": {
+				"outputPath": "dist/apps/dashboard",
+				"main": "apps/dashboard/src/app/page.tsx",
+				"tsConfig": "apps/dashboard/tsconfig.json",
+				"assets": ["apps/dashboard/public/**/*"]
+			}
+		}
+	},
+	"tags": ["type:app", "scope:dashboard"]
+}

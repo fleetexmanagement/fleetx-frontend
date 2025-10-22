@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+# Run full test suite before push
+bunx nx run-many --target=test --all --parallel=3
+
+# Run build check
+bunx nx run-many --target=build --all --parallel=3
+
+# Check for security vulnerabilities
+bun audit --audit-level=moderate

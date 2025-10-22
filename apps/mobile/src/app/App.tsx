@@ -1,15 +1,17 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
+
 import {
-	SafeAreaView,
-	StyleSheet,
-	ScrollView,
-	View,
-	Text,
-	StatusBar,
-	TouchableOpacity,
 	Linking,
+	SafeAreaView,
+	ScrollView,
+	StatusBar,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
 } from "react-native";
+
 import Svg, { G, Path } from "react-native-svg";
 
 export const App = () => {

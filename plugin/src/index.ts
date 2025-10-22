@@ -1,12 +1,14 @@
-// biome-ignore assist/source/organizeImports: <explanation>
+// biome-ignore assist/source/organizeImports: <>
 import {
 	type CreateNodesContextV2,
-	createNodesFromFiles,
 	type CreateNodesV2,
+	createNodesFromFiles,
 } from "@nx/devkit";
 import { dirname } from "node:path";
 
-export type BiomeOptions = {};
+export type BiomeOptions = {
+	path: string;
+};
 
 export const createNodesV2: CreateNodesV2<BiomeOptions> = [
 	"**/package.json",

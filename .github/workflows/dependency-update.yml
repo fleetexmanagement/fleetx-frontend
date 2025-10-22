@@ -1,0 +1,65 @@
+name: 📦 Dependency Updates
+
+on:
+  schedule:
+    - cron: '0 9 * * 1' # Every Monday at 9 AM
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  update-dependencies:
+    name: 📦 Update Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 📦 Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: 📦 Install dependencies
+        run: bun install
+
+      - name: 📦 Check for outdated packages
+        run: bun outdated || true
+
+      - name: 📦 Update dependencies
+        run: |
+          bun update
+          bun audit fix --force
+
+      - name: 🧪 Run tests
+        run: bunx nx run-many --target=test --all --parallel=3
+
+      - name: 🏗️ Build check
+        run: bunx nx run-many --target=build --all --parallel=3
+
+      - name: 📝 Create PR
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore(deps): update dependencies'
+          title: '📦 Automated dependency updates'
+          body: |
+            This PR contains automated dependency updates.
+            
+            ## Changes
+            - Updated npm dependencies
+            - Applied security fixes
+            
+            ## Testing
+            - All tests pass
+            - Build successful
+          branch: automated-dependency-updates
+          delete-branch: true

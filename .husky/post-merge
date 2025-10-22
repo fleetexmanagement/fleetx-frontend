@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+# Update dependencies after merge
+bun install
+
+# Clear Nx cache if needed
+bunx nx reset

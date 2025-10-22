@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+# Run Biome check before commit
+bunx @biomejs/biome check --write
+
+# Run affected tests
+bunx nx affected --target=test --parallel=3
+
+# Run affected lint
+bunx nx affected --target=biome-lint --parallel=3
