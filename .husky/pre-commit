@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run formatting/lint on staged files
+npx --no eslint -v >/dev/null 2>&1 || true
+npx lint-staged
+
+# Fast repo-wide typecheck (optional, can be moved to CI if slow)
+npm run -s typecheck || exit 1

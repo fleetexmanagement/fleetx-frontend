@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FleetX Frontend
+
+Modern Next.js 16 + React 19 app with Tailwind CSS v4, Radix UI, and better-auth.
+
+## Tech Stack
+- Next.js 16 (App Router) with React 19 + React Compiler
+- Tailwind CSS v4, OKLCH color system, `next-themes`
+- Radix UI primitives and custom UI components
+- better-auth (email+password + email OTP)
+- Biome (lint/format), TypeScript strict
 
 ## Getting Started
-
-First, run the development server:
-
 ```bash
+npm ci
+cp env.example .env.local
+# edit .env.local as needed
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts
+- `npm run dev` – Start dev server
+- `npm run build` – Build for production
+- `npm run start` – Start production server
+- `npm run lint` – Biome lint
+- `npm run format` – Biome format write
+- `npm run typecheck` – TypeScript typecheck
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment
+- `NEXT_PUBLIC_API_URL` – Backend base URL used by Next rewrites and better-auth client.
+- Backend must issue proper cookies (HttpOnly, SameSite, Secure) for auth.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Contributing
+- Follow Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, `ci:`, etc.).
+- Pre-commit hooks run Biome and typecheck on staged files.
+- Open PRs against `master`/`main` and fill the PR template.
 
-## Learn More
+See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for details.
 
-To learn more about Next.js, take a look at the following resources:
+## CI
+GitHub Actions runs on push and PR:
+- Install deps, lint (Biome), typecheck (TS), and build.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Releases & Changelog
+- Conventional Commits power automatic versioning and CHANGELOG generation (release automation configured via GitHub Actions—see `.github/workflows/*`).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+Private/Proprietary (update as needed).
